@@ -15,17 +15,9 @@
 </head>
 
 <body>
-    <h1>匯率換算</h1>
+    <h1>Vue practice</h1>
     <div id="app">
-        <p>1 日幣 = 0.21 台幣</p>
-        <div>台幣 <input type="text" v-model="twd" v-on:input="twd2jpy" onfocus="this.value=''" />
-            <!-- <button id="btn_reset" type="button" class="btn btn-primary" style="margin-left: 10px;">Reset</button> -->
-        </div>
-        <div>日幣 <input id="in1" type="text" v-model="jpy" v-on:input="jpy2twd" onfocus="this.value=''" /></div>
-
-    </div>
-    <div>
-
+        Edit: <input type="text" v-model.trim="message" placeholder="請勿超過十個字" :style="msgStyle">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
@@ -34,26 +26,29 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    twd: 0.27,
-                    jpy: 1
+                    message: ''
                 }
             },
-            methods: {
-                twd2jpy() {
-                    this.jpy = Number.parseFloat(Number(this.twd) / 0.21).toFixed(2);
+            computed: {
+                isVaild: function () {
+                    return !this.message.includes('n');
                 },
-                jpy2twd() {
-                    this.twd = Number.parseFloat(Number(this.jpy) * 0.21).toFixed(2);
+                msgStyle: function () {
+                    return {
+                        'border': this.isVaild ? '' : 'red solid 1px',
+                        'color': this.isVaild ? '' : 'red'
+                    };
                 }
             }
         }).mount('#app');
 
         $(function () {
-            $('#btn_reset').click(function () {
-                $('#app input').val('');
-            });
+            // $('#btn_reset').click(function () {
+            //     $('#app input').val('');
+            // });
         });
     </script>
+
 </body>
 
 </html>
