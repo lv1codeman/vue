@@ -9,17 +9,23 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
         #app {
-            padding-left: 10px;
+            padding-left: 20px;
         }
     </style>
 </head>
 
 <body>
-    <h1>BMI Calculator</h1>
+    <h1>匯率換算</h1>
     <div id="app">
         <p>1 日幣 = 0.21 台幣</p>
-        <div>台幣 <input type="text" v-model="twd" v-on:input="twd2jpy" /></div>
-        <div>日幣 <input type="text" v-model="jpy" v-on:input="jpy2twd" /></div>
+        <div>台幣 <input type="text" v-model="twd" v-on:input="twd2jpy" onfocus="this.value=''" />
+            <!-- <button id="btn_reset" type="button" class="btn btn-primary" style="margin-left: 10px;">Reset</button> -->
+        </div>
+        <div>日幣 <input id="in1" type="text" v-model="jpy" v-on:input="jpy2twd" onfocus="this.value=''" /></div>
+
+    </div>
+    <div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
@@ -28,7 +34,7 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    twd: 0.278,
+                    twd: 0.27,
                     jpy: 1
                 }
             },
@@ -43,12 +49,9 @@
         }).mount('#app');
 
         $(function () {
-            // $('#input_height').change(function() {
-            //     vm.$data.height = $('#input_height').val();
-            // });
-            // $('#input_weight').change(function() {
-            //     vm.$data.weight = $('#input_weight').val();
-            // });
+            $('#btn_reset').click(function () {
+                $('#app input').val('');
+            });
         });
     </script>
 </body>
