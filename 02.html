@@ -24,7 +24,7 @@
             <h4>toggleModal without .self</h4>
 
             <div class="modal-mask" :style="modalStyle">
-                <div class="modal-container" @click.self="toggleModal">
+                <div class="modal-container" @click.prevent.self="toggleModal">
                     <div class="modal-body">Hello!<br><br><br><br><br></div>
                 </div>
             </div>
