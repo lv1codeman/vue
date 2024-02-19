@@ -20,47 +20,28 @@
     <h1>Vue practice</h1>
     <div id="app">
         <div id="app">
-            <!-- 1-5 事件 self -->
-            <h4>toggleModal without .self</h4>
-
-            <div class="modal-mask" :style="modalStyle">
-                <div class="modal-container" @click.self="toggleModal">
-                    <div class="modal-body">Hello!</div>
-                </div>
-            </div>
-
-            <button @click="isShow = true">Click Me</button>
+            <p>你按下的是按鍵是: {{ pressKey }}</p>
+            <input type="text" @keyup="press">
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
     <script>
-        // const { createApp, ref } = Vue;
         const vm = Vue.createApp({
             data: () => {
                 return {
-                    isShow: false
-                }
-            },
-            computed: {
-                modalStyle() {
-                    return {
-                        'display': this.isShow ? 'table' : 'none'
-                    };
+                    pressKey: ''
                 }
             },
             methods: {
-                toggleModal() {
-                    this.isShow = !this.isShow;
+                press(event) {
+                    this.pressKey = event.key;
+                    window.setTimeout(() => {
+                        event.target.value = '';
+                    }, 300)
                 }
             }
         }).mount('#app');
-
-        $(function () {
-            // $('#btn_reset').click(function () {
-            //     $('#app input').val('');
-            // });
-        });
     </script>
 
 </body>
