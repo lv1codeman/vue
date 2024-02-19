@@ -19,28 +19,57 @@
 <body>
     <h1>Vue practice</h1>
     <div id="app">
-        <div id="app">
-            <p>你按下的是按鍵是: {{ pressKey }}</p>
-            <input type="text" @keyup="press">
-            <!-- any key -->
+        <div class="wrap">
+            <div class="todo-lists">
+                <h3>Todo List</h3>
+                <ul>
+                    <li v-for="i in todoLists " :key="i.id">
+                        <label><input v-model="i.isDone" type="checkbox"> {{ i.title }}</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="done-lists">
+                <h3>Done List</h3>
+                <ul>
+                    <li v-for="i in doneLists" :key="i.id">
+                        <label><input v-model="i.isDone" type="checkbox"> {{ i.title }}</label>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
     <script>
         const vm = Vue.createApp({
-            data: () => {
+            data() {
                 return {
-                    pressKey: ''
+                    lists: [{
+                        id: 'task001',
+                        title: '選項 1',
+                        isDone: false
+                    },
+                    {
+                        id: 'task002',
+                        title: '選項 2',
+                        isDone: false
+                    },
+                    {
+                        id: 'task003',
+                        title: '選項 3',
+                        isDone: false
+                    },
+                    ]
                 }
             },
-            methods: {
-                press(event) {
-                    this.pressKey = event.key;
-                    window.setTimeout(() => {
-                        event.target.value = '';
-                    }, 300)
-                }
+            computed: {
+                todoLists() {
+                    return this.lists.filter(d => !d.isDone)
+                },
+                doneLists() {
+                    return this.lists.filter(d => d.isDone)
+                },
             }
         }).mount('#app');
     </script>
