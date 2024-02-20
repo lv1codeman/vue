@@ -19,43 +19,59 @@
 <body>
     <h1>Vue practice</h1>
     <div id="app">
-        <h3>Root Instance</h3>
+        <!-- 這是外層元件的 msg -->
+        <h3>{{ msg }}</h3>
 
-        <!-- 在根實體使用自訂元件 -->
-        <my-component></my-component>
-        <my-component></my-component>
-        <my-component02></my-component02>
-        <br>
-        <media-block></media-block>
+        <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
+        <div>--my-component--</div>
+        <my-component v-bind:parent-msg="msg"></my-component>
+
+        <!-- html中的屬性名稱 -->
+        <div>--media-block--</div>
+        <media-block :pm-sg1="msg"></media-block>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
     <script type="text/x-template" id="media-block">
-        <div class="media">
-            <img src="..." alt="Generic placeholder image" class="mr-3">
-            <div class="media-body">
-                <h5 class="mt-0">Media heading</h5>
-                <div>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae aspernatur repellendus accusamus et? Obcaecati, facere fugiat incidunt natus pariatur fugit!
-                </div>
-            </div>
-        </div>
+        <div class="component">
+            <div> 自己的 msg ==> {{ msg }} </div>
+            <div> 從 props 來的 pm-sg1 ==> {{ pmSg1 }} </div>
+          </div>
     </script>
     <script>
-        const vm = Vue.createApp({
-            components: {
-                'my-component': {
-                    template: `<div>Hello! 01</div>`,
-                },
-                'my-component02': {
-                    template: `<div>Hello! 02</div>`,
+        const app = Vue.createApp({
+            data() {
+                return {
+                    msg: '這是外層元件的 msg'
                 }
             }
         });
-        vm.component('media-block', {
-            template: '#media-block'
+
+        app.component('my-component', {
+            template: `
+    <div class="component">
+        <div> 自己的 msg ==> {{ msg }} </div>
+        <div> 從 props 來的 parentMsg ==> {{ parentMsg }} </div>
+    </div>`,
+            props: ["parentMsg"],
+            data: () => {
+                return {
+                    msg: '這是子元件的 msg'
+                }
+            }
         });
-        vm.mount('#app');
+
+        app.component('media-block', {
+            template: '#media-block',
+            props: ["pmSg1"],
+            data: () => {
+                return {
+                    msg: '這是子元件的 msg'
+                }
+            }
+        });
+        app.mount('#app');
     </script>
 
 </body>
