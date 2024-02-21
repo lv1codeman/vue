@@ -25,8 +25,8 @@
         <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
         <div>--my-component--</div>
         <my-component v-bind:parent-msg="msg"></my-component>
-
-        <!-- html中的屬性名稱 -->
+        <br>
+        <!-- html中的屬性名稱需用連字號 (kebab-case) -->
         <div>--media-block--</div>
         <media-block :pm-sg1="msg"></media-block>
 
@@ -64,7 +64,13 @@
 
         app.component('media-block', {
             template: '#media-block',
-            props: ["pmSg1"],
+            // props需用駝峰式命名 (pascal-case)
+            props: {
+                "pm-sg1": {
+                    type: String, Number,
+                    require: true
+                }
+            },
             data: () => {
                 return {
                     msg: '這是子元件的 msg'
